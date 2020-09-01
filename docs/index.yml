@@ -1,0 +1,229 @@
+openapi: 3.0.1
+info:
+  title: LINKEDIN API
+  description:  API is for Strive's Batch 20 Linkedin Project
+  version: 1.0.0
+servers:
+  - url: https://linkedinbackend.herokuapp.com/
+    description: Production server
+  - url: http://localhost:3001
+    description: Local server
+tags:
+  - name: users
+    description: Contains all user methods, including authorization
+  - name: posts
+    description:  Contains all post methods
+  - name: experiences
+    description:  Contains all experiences methods
+paths:
+  /users:
+    get:
+      tags:
+        - users
+      summary: Returns a list of users.
+      description:
+      parameters:
+        - in: headers
+          name: authorization
+          schema:
+            type: string
+          description: You should use your Basic Authorization credentials to use this service.
+      responses:
+        "200": # status code
+          description: List of users
+    post:
+      tags:
+        - users
+      description: Creates  new user
+      requestBody:
+        description: The object
+        content:
+          application/json:
+            schema:
+              type: object
+              example :
+                name: Ubeyt
+                lastName : Demir
+                email : ubeytdemir4se@gmail.com
+                password : "123456789"
+      responses:
+        "200": # status code
+          description: Returns new user
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  _id : 1a23sd4as9849d49as8d4sa4das
+                  name: Ubeyt
+                  lastName: Demir
+                  email: ubeytdemir4se@gmail.com
+                  password: "123456789"
+  /users/login:
+    post:
+      tags:
+        - users
+      description: Returns authorization credentials
+      requestBody:
+        description: The object
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                email: ubeytdemir4se@gmail.com
+                password: "123456789"
+      responses:
+        "200": # status code
+          description: Returns Basic Authorization
+  /users/{id}:
+    get:
+      tags:
+        - users
+      summary: Returns single user
+      description: Retrieve single user
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: The ID of the User to retrieve
+        - in: headers
+            name: authorization
+            schema:
+              type: string
+            description: You should use your Basic Authorization credentials to use this service.
+      responses:
+        "200": # status code
+          description: The single user
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  _id: 1a23sd4as9849d49as8d4sa4das
+                  name: Ubeyt
+                  lastName: Demir
+                  email: ubeytdemir4se@gmail.com
+                  password: "123456789"
+    put:
+      tags:
+        - users
+      description: Update an existing User
+      summary: Update
+      parameters:
+        - in: headers
+            name: authorization
+            schema:
+              type: string
+            description: You should use your Basic Authorization credentials to use this service.
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: The ID of the Users to update
+      requestBody:
+        description: Fields to update
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: Ubeyt II
+                lastName: Demir
+                email: ubeytdemir4se@gmail.com
+
+      responses:
+        "200": # status code
+          description: returns updated user
+      content:
+        application/json:
+          schema:
+            type: object
+            example:
+              _id: 1a23sd4as9849d49as8d4sa4das
+              name: Ubeyt
+              lastName: Demir
+              email: ubeytdemir4se@gmail.com
+              password: "123456789"
+    delete:
+      tags:
+        - users
+      description: Delete a specific User by ID
+      parameters:
+        - in: headers
+            name: authorization
+            schema:
+              type: string
+            description: You should use your Basic Authorization credentials to use this service.
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: The ID of the User to delete
+      responses:
+        "200": # status code
+          description: Returns operation result
+  /users/{id}/photo:
+    put:
+      tags:
+        - users
+      description: Update users avatar
+      summary: Update
+      parameters:
+        - in: headers
+            name: authorization
+            schema:
+              type: string
+            description: You should use your Basic Authorization credentials to use this service.
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: The ID of the Users to update
+      requestBody:
+        description: FormData with the key photo
+      responses:
+        "200": # status code
+          description: Returns updated user
+      content:
+        application/json:
+          schema:
+            type: object
+            example:
+              _id: 1a23sd4as9849d49as8d4sa4das
+              name: Ubeyt
+              lastName: Demir
+              email: ubeytdemir4se@gmail.com
+              password: "123456789"
+              image : your image url
+  /users/me:
+    get:
+      tags:
+        - users
+      summary: Returns authenticaded user
+      description: Retrieve authenticated user
+      parameters:
+        - in: headers
+            name: authorization
+            schema:
+              type: string
+            description: You should use your Basic Authorization credentials to use this service.
+      responses:
+        "200": # status code
+          description: The single user
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  _id: 1a23sd4as9849d49as8d4sa4das
+                  name: Ubeyt
+                  lastName: Demir
+                  email: ubeytdemir4se@gmail.com
+                  password: "123456789"
+
